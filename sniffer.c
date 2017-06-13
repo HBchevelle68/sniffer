@@ -6,12 +6,6 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-#include <netinet/tcp.h>
-#include <netinet/udp.h>
-#include <netinet/ip.h>
-#include <netinet/ip_icmp.h> 
-#include <linux/if_ether.h>
-
 #include "processing.h"
 
 #define MAXBUFF 65536
@@ -33,16 +27,14 @@ int main(int argc, char* argv[]){
         exit(EXIT_FAILURE);
     }
 
-	
-	printf("here\n");
 	unsigned int ssaddr = sizeof(saddr);
 	for(int i =0; i<10000; i++){
 	    if(recvfrom(rsfd, buffer, MAXBUFF, 0, &saddr, (socklen_t *)&ssaddr) < 0){
 	        printf("Recvfrom error , failed to get packets\n");
 	        return EXIT_FAILURE;
 	    }
-	    processpacket(buffer, &icmp, &tcp, &udp, &other);
-	    printf("TCP: %d  UDP: %d  ICMP: %d  OTHER: %d  \r", tcp, udp, icmp, other);
+	    processIP(buffer, &icmp, &tcp, &udp, &other);
+	    //printf("TCP: %d  UDP: %d  ICMP: %d  OTHER: %d  \r", tcp, udp, icmp, other);
 
 
 	}
