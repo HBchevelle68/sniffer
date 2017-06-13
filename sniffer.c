@@ -5,9 +5,6 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-#include <sys/ioctl.h>        // macro ioctl is defined
-#include <bits/ioctls.h>      // defines values for argument "request" of ioctl.
-#include <net/if.h> 
 
 #include <netinet/tcp.h>
 #include <netinet/udp.h>
@@ -24,7 +21,6 @@ int main(int argc, char* argv[]){
 
 	int rsfd;//raw socket file descriptor
 	struct sockaddr saddr;
-	//struct ifreq ifr;
 	unsigned char* buffer = malloc(MAXBUFF);
 	memset(buffer, 0, MAXBUFF);
 	int icmp = 0;
