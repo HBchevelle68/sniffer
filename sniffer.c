@@ -42,7 +42,9 @@ int main(int argc, char* argv[]){
 	        return EXIT_FAILURE;
 	    }
 	    processpacket(buffer, &icmp, &tcp, &udp, &other);
-	    printf("\rTCP : %d   UDP : %d   ICMP : %d   Others : %d\n",tcp,udp,icmp,other);
+	    printf("TCP: %d  UDP: %d  ICMP: %d  OTHER: %d  \r", tcp, udp, icmp, other);
+
+
 	}
 	printf("%s",buffer);
     free(buffer);
