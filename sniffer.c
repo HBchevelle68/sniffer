@@ -21,7 +21,6 @@ int main(int argc, char* argv[]){
 	int rsfd;//raw socket file descriptor
 	//struct sockaddr saddr;
 	struct sockaddr_ll if_addr;
-	char* ifname = "ens33";
 	unsigned char* buffer = malloc(MAXBUFF);
 	memset(buffer, 0, MAXBUFF);
 	int icmp = 0;
@@ -37,19 +36,19 @@ int main(int argc, char* argv[]){
     //grab interface index
 	struct ifreq interface;
 	memset(&interface, 0, sizeof(struct ifreq));
-	strncpy((char*)interface.ifr_name, ifname, IF_NAMESIZE);
+	strncpy((char*)interface.ifr_name, argv[1], IF_NAMESIZE);
 	if(ioctl(rsfd, SIOCGIFINDEX, &interface) < 0){
 		perror("IF index ioctl error: ");
 		exit(EXIT_FAILURE);
 	}
 
+	//bind the raw socket to the interface
 	if_addr.sll_ifindex = interface.ifr_ifindex;
 	if_addr.sll_family = AF_PACKET;
 	if(bind(rsfd, (struct sockaddr*)&if_addr, sizeof(if_addr)) < 0){
 		perror("Erro binding socket: ");
 		exit(EXIT_FAILURE);
 	}
-
 
 	struct packet_mreq if_mreq;
 	memset(&if_mreq, 0, sizeof(struct packet_mreq));
@@ -61,13 +60,6 @@ int main(int argc, char* argv[]){
 		exit(EXIT_FAILURE);
 	}
 
-
-
-
-
-    
-
-	//unsigned int ssaddr = sizeof(saddr);
 	struct sockaddr_ll addr;
 	socklen_t addr_len = sizeof(addr);
 	while(1){
