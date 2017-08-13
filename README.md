@@ -1,3 +1,3 @@
 # sniffer
 
-Sniffer in C. Work in progress. 
+Sniffer in C. Work in progress. Paused June 12.
